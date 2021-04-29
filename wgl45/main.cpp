@@ -15,6 +15,16 @@
 #include <gl/glext.h>
 #include <gl/wglext.h>
 
+#define GLM_FORCE_SWIZZLE
+#include <glm/gtc/constants.hpp>
+#include <glm/gtc/vec1.hpp>
+#include <glm/ext/vector_relational.hpp>
+#include <glm/vector_relational.hpp>
+#include <glm/geometric.hpp>
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
+#include <glm/vec4.hpp>
+
 #pragma comment(lib, "user32.lib")
 #pragma comment(lib, "gdi32.lib")
 #pragma comment(lib, "winmm.lib")
@@ -22,7 +32,7 @@
 #pragma comment(lib, "opengl32.lib")
 
 static LRESULT WINAPI
-window_msg_proc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+msg_proc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	auto param = wParam & 0xFFF0;
 	switch (msg) {
@@ -79,7 +89,7 @@ main(int argc, char *argv[])
 	auto ex_style = WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;
 	RECT rc = {0, 0, sw, sh};
 	WNDCLASSEX twc = {
-		sizeof(WNDCLASSEX), CS_CLASSDC, window_msg_proc, 0L, 0L, instance,
+		sizeof(WNDCLASSEX), CS_CLASSDC, msg_proc, 0L, 0L, instance,
 		LoadIcon(NULL, IDI_APPLICATION), LoadCursor(NULL, IDC_ARROW),
 		(HBRUSH)GetStockObject(BLACK_BRUSH), NULL, name, NULL
 	};
